@@ -1,0 +1,164 @@
+<form [formGroup]="postForm">
+    <div class="w3-row">
+        <div class="w3-twothird w3-container">
+            <div class="w3-quarter">
+                <h5>Content</h5>
+            </div>
+            <div class="w3-rest">
+                <div class="w3-right">
+                    <div class="w3-bar">
+                        <div class="w3-bar-item">
+                            <button class="w3-button w3-red" style="margin-left: 5px;" (click)="openContentPopUp()">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                Add Content
+                            </button>
+                        </div>
+                        <div class="w3-bar-item">
+                            <button class="w3-button w3-red" style="margin-left: 5px;" (click)="openCodePopUp()">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                Add Code
+                            </button>
+                        </div>
+                        <div class="w3-bar-item">
+                            <button class="w3-button w3-black" (click)="openImagePopUp()">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                Add Image
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div>
+                <input class="w3-input w3-margin-bottom" type="text" formControlName="title" placeholder="Title : *">
+
+                <div class="w3-row" *ngFor="let item of editorArray">
+                    <div class="w3-threequarter" *ngIf="item.htmlContent.htmlContent">
+                        <div [innerHTML]="item.htmlContent.htmlContent"></div>
+                    </div>
+                    <div class="w3-quarter" *ngIf="item.htmlContent.htmlContent">
+                        <div class="w3-bar-item">
+                            <button class="w3-button w3-red" style="margin-left: 5px;" (click)="onContentUpdate(item.htmlContent)">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                Edit Content
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="w3-threequarter" *ngIf="item.code.code">
+                        <textarea highlight-js [options]="{}" [lang]="item.code.language" [(ngModel)]="item.code.code" [ngModelOptions]="{standalone: true}">                         
+                                </textarea>
+                    </div>
+                    <div class="w3-quarter" *ngIf="item.code.code">
+                        <div class="w3-bar-item">
+                            <button class="w3-button w3-red" style="margin-left: 5px;" (click)="onCodeUpdate(item.code)">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                Edit Code
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="w3-threequarter" *ngIf="item.image.imageUrl">
+                        <img [src]="item.image.imageUrl" height="200px" width="300px">
+                    </div>
+                    <div class="w3-quarter" *ngIf="item.image.imageUrl">
+                        <div class="w3-bar-item">
+                            <button class="w3-button w3-red" style="margin-left: 5px;" (click)="onImageUpdate(item.image)">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                Edit Image
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="w3-third w3-container">
+            <h4 class="w3-border-bottom">Select : </h4>
+            <div>
+                <select class="w3-select" style="min-width: 200px" formControlName="categoryId" (change)="categorySelectionChanged($event.target.value)">
+                    <option value="0" selected>Choose category</option>
+                    <option class="w3-center" *ngFor="let category of categories" [value]="category.key">{{category.value}}</option>
+                </select>
+            </div>
+            <br>
+            <div>
+                <select class="w3-select" formControlName="courseId" (change)="courseSelectionChanged($event.target.value)" style="min-width: 200px">
+                    <option value="0" selected>Choose course</option>
+                    <option *ngFor="let course of courses" [value]="course.key">{{course.value}}</option>
+                </select>
+            </div>
+            <br>
+            <div>
+                <select class="w3-select" style="min-width: 200px" formControlName="lessonId">
+                    <option value="0" selected>Choose lesson</option>
+                    <option *ngFor="let lesson of lessons" [value]="lesson.key">{{lesson.value}}</option>
+                </select>
+            </div>
+            <br>
+            <div>
+                <select class="w3-select" name="option" formControlName="isActive">
+                    <option [value]="false" selected>In Active</option>
+                    <option [value]="true">Active</option>
+                </select>
+            </div>
+            <button class="w3-button w3-black w3-section" [disabled]="!postForm.valid" (click)="submitForm()">Publish</button>
+        </div>
+    </div>
+</form>
+
+<!-- content modal -->
+<div id="contentId" class="w3-modal">
+    <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:900px">
+        <angular-editor [(ngModel)]="htmlContent" [config]="editorConfig"></angular-editor>
+        <div class="w3-center">
+            <div class="w3-bar">
+                <button class="w3-button w3-black w3-section" onclick="document.getElementById('contentId').style.display='none'" type="button">Cancel</button>
+                <button class="w3-button w3-red w3-section" style="margin-left: 5px;" [disabled]="!htmlContent" (click)="onContentAdd(contentObject)"
+                    type="button">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- code modal -->
+<div id="codeId" class="w3-modal">
+    <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width: 900px">
+        <div class="w3-container">
+            <div>
+                <select class="w3-select" (change)="languageSelectionChanged($event.target.value)">
+                    <option value="0" selected>Choose language</option>
+                    <option class="w3-center" *ngFor="let language of languages" [value]="language.value">{{language.value}}</option>
+                </select>
+            </div>
+            <br>
+            <textarea rows="9" [(ngModel)]="code" cols="90"></textarea>
+        </div>
+        <div class="w3-center">
+            <div class="w3-bar">
+                <button class="w3-button w3-black w3-section" onclick="document.getElementById('codeId').style.display='none'" type="button">Cancel</button>
+                <button class="w3-button w3-red w3-section" style="margin-left: 5px;" [disabled]="!(code && langSelected)" (click)="onCodeAdd(codeObject)"
+                    type="button">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- image upload modal -->
+<div id="imageId" class="w3-modal">
+    <div class="w3-modal-content w3-card-4 w3-animate-zoom w3-container" style="max-width:900px">
+        <h6>Add Image File</h6>
+        <hr/>
+        <div>
+            <input type="file" class="upload" (change)="onImageChanged($event)" />
+        </div>
+        <img *ngIf="imageString" src="{{imageString}}" height="200" width="200">
+        <!-- <button class="btn btn-danger" (click)="save()">Upload</button> -->
+        <hr/>
+        <div class="w3-center">
+            <div class="w3-bar">
+                <button class="w3-button w3-black w3-section" onclick="document.getElementById('imageId').style.display='none'" type="button">Cancel</button>
+                <button class="w3-button w3-red w3-section" style="margin-left: 5px;" (click)="onImageAdd(imageObject)" type="button">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

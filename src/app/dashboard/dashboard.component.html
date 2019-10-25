@@ -1,0 +1,53 @@
+<div class="w3-top w3-black">
+    <div class="w3-bar w3-border-bottom">
+        <button class="w3-bar-item  w3-button  w3-hide-large w3-text-white" (click)="open()">
+            <i class="fa fa-bars fa-2x"></i>
+        </button>
+        <div class="w3-right" style="margin-right: 25px;">
+            <a class="w3-bar-item w3-text-white w3-dropdown-hover">
+                <i class="fa fa-user-circle-o fa-2x" aria-hidden="true"></i>
+                <div class="w3-dropdown-content w3-bar-block">
+                    <button style="background:transparent;cursor:pointer;color:#000" (click)="logout()">Log Out</button>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Sidebar/menu -->
+
+<nav class="w3-sidebar w3-border-right sidebar-width w3-animate-left" style="z-index:3;width:150px;" *ngIf="mySidebar">
+    <br>
+    <div class="w3-container w3-row">
+        <div class="w3-col s12 w3-hide-large">
+            <a (click)="close();" class="w3-text-purple">
+                <i class="fa fa-times fa-2x w3-right" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div class="w3-col">
+            <i class="fa fa-user-circle-o fa-4x"></i>
+            Administrator
+        </div>
+
+    </div>
+    <hr>
+    <div class="w3-bar-block">
+        <a href="#" class="w3-bar-item w3-button w3-padding" routerLink="/dashboard" routerLinkActive="active">
+            Dashboard</a>
+        <a href="#" class="w3-bar-item w3-button w3-padding" routerLink="/dashboard/categories" routerLinkActive="active">
+            Categories</a>
+        <a href="#" class="w3-bar-item w3-button w3-padding" routerLink="/dashboard/courses" routerLinkActive="active">
+            Courses</a>
+        <a href="#" class="w3-bar-item w3-button w3-padding" routerLink="/dashboard/lessons" routerLinkActive="active">
+            Lessons</a>
+        <a href="#" class="w3-bar-item w3-button w3-padding" routerLink="/dashboard/topics" routerLinkActive="active">
+            Topics</a>
+        <a href="#" class="w3-bar-item w3-button w3-padding" routerLink="/dashboard/languages" routerLinkActive="active">
+            Languages</a>
+    </div>
+</nav>
+
+<div class="w3-main" style="margin-left:150px;padding-top: 50px;">
+    <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,68 @@
+<div class="w3-top w3-hide-large" style="margin-top: 100px">
+    <a class="w3-text-deep-purple w3-right" (click)="open()">
+        <i class="fa fa-ellipsis-v fa-2x" style="margin-right: 20px;"></i>
+    </a>
+</div>
+
+<div style="margin-top: 55px">
+    <div style="margin-top:90px;" class="w3-hide-large">
+    </div>
+    <!-- Sidebar/menu -->
+    <nav class="w3-sidebar w3-hide-small w3-animate-left w3-text-purple w3-border-right" style="z-index:3;width:300px; height: 100%;padding-bottom: 50px;">
+        <div class="w3-container w3-row w3-light-grey">
+            <div class="w3-col">
+                <p>{{courseIndex.name}}</p>
+            </div>
+            <div class="w3-col s2 w3-hide-large">
+                <a (click)="close();" class="w3-text-purple">
+                    <i class="fa fa-times fa-2x w3-right" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+        <div class="w3-container">
+            <ul>
+                <li *ngFor="let item of courseIndex.lessons">
+                    <p class="w3-text-deep-purple">{{item.name}}</p>
+                    <ul *ngIf="item.topics.length  > 0">
+                        <li *ngFor="let subItem of item.topics">
+                            <a (click)="close();" class="w3-text-black" [routerLink]="['/courseDetails',routeItem?.courseId,routeItem?.slug,subItem?.topicId, subItem?.slug]">
+                                {{subItem.name}}</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <br>
+        </div>
+    </nav>
+
+    <nav class="w3-sidebar w3-hide-large w3-animate-left w3-border-right " style="z-index:3;width:300px; height: 100%;padding-bottom: 50px;"
+        *ngIf="mySidebar">
+        <div class="w3-container w3-row w3-light-grey">
+            <div class="w3-col s10">
+                <p>{{courseIndex.name}}</p>
+            </div>
+            <div class="w3-col s2 w3-hide-large">
+                <a (click)="close();" class="w3-text-purple">
+                    <i class="fa fa-times fa-2x w3-right" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+        <div class="w3-container">
+            <ul>
+                <li *ngFor="let item of courseIndex.lessons">
+                    <p class="w3-text-deep-purple">{{item.name}}</p>
+                    <ul *ngIf="item.topics.length  > 0">
+                        <li *ngFor="let subItem of item.topics">
+                            <a (click)="close();" [routerLink]="['/courseDetails',routeItem?.courseId,routeItem?.slug,subItem?.topicId, subItem?.slug]">
+                                {{subItem.name}}</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <br>
+        </div>
+    </nav>
+    <div>
+        <router-outlet></router-outlet>
+    </div>
+</div>

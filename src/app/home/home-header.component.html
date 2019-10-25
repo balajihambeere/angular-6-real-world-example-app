@@ -1,0 +1,71 @@
+<ng-progress [color]="'white'"></ng-progress>
+<div class="w3-top w3-purple">
+    <a class="w3-bar-item w3-xlarge w3-hide-large">BALAJI HAMBEERE'S BLOG</a>
+    <div class="w3-bar w3-hide-small">
+        <div class="w3-row">
+            <div class="w3-third">
+                <a class="w3-bar-item w3-xlarge">BALAJI HAMBEERE'S BLOG</a>
+            </div>
+            <div class="w3-third w3-container">
+                <a [routerLink]="['']" class="w3-bar-item w3-button w3-large">Home</a>
+                <div class="w3-dropdown-hover w3-large">
+                    <button class="w3-button">Courses</button>
+                    <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                        <a [routerLink]="['/category', item.key, item.value]" *ngFor="let item of categories" class="w3-bar-item w3-button">{{item.value}}</a>
+                    </div>
+                </div>
+                <a routerLink="/about" class="w3-bar-item w3-button w3-large">About Me</a>
+            </div>
+        </div>
+    </div>
+    <!-- horizontal scroll menu -->
+    <div class="w3-bar w3-large w3-hide-large">
+        <div class="scrollmenu">
+            <a class="w3-hide-large w3-text-white" (click)="open()">
+                <i class="fa fa-bars fa-lg"></i>
+            </a>
+            <a routerLink="''">
+                <i class="fa fa-home fa-lg"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Sidebar/menu -->
+<div class="w3-hide-large">
+    <nav class="w3-sidebar w3-bar-block w3-border-right w3-animate-left sidebar-width" *ngIf="mySidebar">
+        <br>
+        <div class="w3-container w3-row">
+            <div class="w3-col s8 w3-center">
+                <h5 class="w3-bar-item w3-hide-large"> BALAJI HAMBEERE'S BLOG</h5>
+            </div>
+            <div class="w3-col s4">
+                <a (click)="close();" class="w3-text-purple">
+                    <i class="fa fa-times fa-2x w3-right" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+        <hr>
+        <div class="w3-bar-block">
+            <h5 *ngFor="let item of categories">
+                <a (click)="close();" [routerLink]="['/category', item.key, item.value]" class="w3-bar-item w3-button">{{item.value
+                    | uppercase}}</a>
+            </h5>
+        </div>
+    </nav>
+</div>
+<div style="min-height: 550px;">
+    <router-outlet></router-outlet>
+</div>
+
+
+<!-- Footer -->
+<footer class="w3-container w3-padding-64 w3-center w3-opacity w3-light-grey w3-xlarge">
+    <i class="w3-container fa fa-facebook-official w3-hover-opacity"></i>
+    <i class="w3-container fa fa-instagram w3-hover-opacity"></i>
+    <i class="w3-container fa fa-snapchat w3-hover-opacity"></i>
+    <i class="w3-container fa fa-pinterest-p w3-hover-opacity"></i>
+    <i class="w3-container fa fa-twitter w3-hover-opacity"></i>
+    <i class="w3-container fa fa-linkedin w3-hover-opacity"></i>
+    <p class="w3-medium">Balaji Hambeere</p>
+</footer>

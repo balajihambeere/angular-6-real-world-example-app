@@ -1,0 +1,10 @@
+.mdl-card__title
+  {
+      background-color: #000;
+      color: #fff;
+  }
+  .full-width-button {
+    width: 100%;
+    background-color: #000;
+    color: #fff;
+}

@@ -1,0 +1,37 @@
+<form [formGroup]="courseForm" (ngSubmit)="submitForm()">
+    <div class="w3-row">
+        <div class="w3-twothird w3-container w3-border-right">
+            <h4>Add New Course</h4>
+            <hr>
+            <label>
+                <b>Course Title:</b>
+            </label>
+            <input class="w3-input w3-border w3-margin-bottom" type="text" formControlName="name" placeholder="Enter course*" name="name">
+            <label>
+                <b>Description :</b>
+            </label>
+            <angular-editor formControlName="description" [config]="editorConfig"></angular-editor>
+        </div>
+        <div class="w3-third w3-container">
+            <div>
+                <label>
+                    <b>Category: </b>
+                </label>
+                <select class="w3-select w3-border" formControlName="categoryId" style="min-width: 200px">
+                    <option [value]="0" disabled selected>Choose your option</option>
+                    <option *ngFor="let keyValue of categories" [value]="keyValue.key">{{keyValue.value}}</option>
+                </select>
+            </div>
+            <div>
+                <label>
+                    <b>Status : </b>
+                </label>
+                <select class="w3-select w3-border" name="option" formControlName="isActive">
+                    <option [value]="false">In Active</option>
+                    <option [value]="true">Active</option>
+                </select>
+            </div>
+            <button class="w3-button w3-block w3-green w3-section w3-padding" [disabled]="!courseForm.valid" type="submit">Save</button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,52 @@
+<div class="w3-row">
+    <div class="w3-twothird w3-container w3-border-right">
+        <div class="w3-row">
+            <div class="w3-half">
+                <h4>Topic List</h4>
+            </div>
+            <div class="w3-half">
+                <a class="w3-button w3-indigo w3-right" style="margin-left: 10px" [routerLink]="['/dashboard/topics/manage', 0]" routerLinkActive="active">
+                    <i class="fa fa-plus" aria-hidden="true"></i> New
+                </a>
+            </div>
+        </div>
+        <hr/>
+        <table class="w3-table w3-striped w3-bordered">
+            <tr>
+                <th>Topic</th>
+                <th>Action</th>
+            </tr>
+            <tr *ngFor="let item of topics">
+                <td>{{item.title}}</td>
+                <td>
+                    <a class="w3-bar-item w3-button" [routerLink]="['/dashboard/topics/manage', item.topicId]" routerLinkActive="active">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="w3-third w3-container">
+        <h4 class="w3-border-bottom">Search Bar :</h4>
+        <div>
+            <select class="w3-select " style="min-width: 200px" (change)="categorySelectionChanged($event.target.value)">
+                <option value="0" selected>Choose your option</option>
+                <option class="w3-center" *ngFor="let category of categories" [value]="category.key">{{category.value}}</option>
+            </select>
+        </div>
+        <br>
+        <div>
+            <select class="w3-select" (change)="courseSelectionChanged($event.target.value)" style="min-width: 200px">
+                <option value="0" selected>Choose your option</option>
+                <option *ngFor="let course of courses" [value]="course.key">{{course.value}}</option>
+            </select>
+        </div>
+        <br>
+        <div>
+            <select class="w3-select" style="min-width: 200px" (change)="lessonSelectionChanged($event.target.value)">
+                <option value="0" selected>Choose your option</option>
+                <option *ngFor="let lesson of lessons" [value]="lesson.key">{{lesson.value}}</option>
+            </select>
+        </div>
+    </div>
+</div>

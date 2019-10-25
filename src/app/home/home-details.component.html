@@ -1,0 +1,35 @@
+<!-- !PAGE CONTENT! -->
+<div class="w3-main w3-margin-bottom" style="margin-left:300px;">
+    <div class="w3-row">
+        <div class="w3-twothird w3-container">
+            <div style="margin-top:50px;" class="w3-hide-large">
+                <hr/>
+            </div>
+            <div *ngIf="(course | json) != '{}'">
+                <h2>{{course.name}}</h2>
+                <hr>
+                <div [innerHTML]="course.description"></div>
+            </div>
+
+            <div *ngIf="(topic | json) != '{}'">
+                <h2>{{topic.title}}</h2>
+                <hr>
+                <div *ngFor="let item of topic.contents">
+                    <div *ngIf="item.htmlContent.htmlContent">
+                        <div [innerHTML]="item.htmlContent.htmlContent"></div>
+                    </div>
+                    <div *ngIf="item.code.code">
+                        <textarea highlight-js [options]="{}" [lang]="item.code.language" [(ngModel)]="item.code.code">                         
+                                </textarea>
+                    </div>
+                    <div *ngIf="item.image.imageUrl">
+                        <img [src]="item.image.imageUrl" class="w3-image" height="200px">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="w3-third w3-center w3-container">
+            <h5>Advertisement</h5>
+        </div>
+    </div>
+</div>
